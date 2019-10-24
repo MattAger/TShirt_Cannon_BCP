@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 /**
  * This is a demo program showing the use of the RobotDrive class. The
@@ -44,7 +45,9 @@ public class Robot extends SampleRobot {
       = new DifferentialDrive(left_m, right_m);
   
   
-  private final Joystick m_stick = new Joystick(0);
+  private final Joystick left_stick = new Joystick(0);
+  private final Joystick right_stick = new Joystick(1);
+  private final JoystickButton some_button = new JoystickButton(left_stick, 1);
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
 
   public Robot() {
@@ -77,18 +80,24 @@ public class Robot extends SampleRobot {
   public void operatorControl() {
     m_robotDrive.setSafetyEnabled(true);
     while (isOperatorControl() && isEnabled()) {
-      // Drive arcade style
-      m_robotDrive.tankDrive(-m_stick.getY(), m_stick.getX());
+      // Drive tank style
+      m_robotDrive.tankDrive(-left_stick.getY(), -right_stick.getY());
+
+      if (some_button.get())
+      {
+        //print("hit button");
+      }
 
       // The motors will be updated every 5ms
       //Timer.delay(0.005);
     }
   }
 
-  /**
-   * Runs during test mode.
-   */
-  @Override
-  public void test() {
-  }
+  //@Override
+  //public void some_button.toggleWhenPressed(Load_Cannon command)
+  //{
+
+  //}
+
+
 }
